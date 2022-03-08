@@ -1,34 +1,38 @@
-package tis.springcommunityproject.service;
+package tis.springcommunityproject.service.community;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tis.springcommunityproject.domain.PostEntity;
-import tis.springcommunityproject.repository.JpaPostRepository;
+import tis.springcommunityproject.domain.community.BoardPostEntity;
+import tis.springcommunityproject.repository.JpaBoardPostRepository;
+import tis.springcommunityproject.service.AuthenticationException;
+import tis.springcommunityproject.service.member.MemberService;
+import tis.springcommunityproject.service.NotFoundDataException;
 
 import java.util.Objects;
 
 @Service
 public class CommunityServiceImpl implements CommunityService {
 
-	private final JpaPostRepository postRepository;
+	private final JpaBoardPostRepository postRepository;
 	private final MemberService memberService;
 
-	public CommunityServiceImpl(JpaPostRepository postRepository, MemberService memberService) {
+	public CommunityServiceImpl(JpaBoardPostRepository postRepository, MemberService memberService) {
 		this.postRepository = postRepository;
 		this.memberService = memberService;
 	}
 
 	@Override
 	@Transactional
-	public PostEntity create(Long boardId, PostEntity post, Long authId) {
+	public BoardPostEntity create(Long boardId, BoardPostEntity post, Long authId) {
 		post.updateUser(memberService.findOne(authId));
 		return postRepository.save(post);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public PostEntity findOne(Long boardId, Long postId, Long authId) {
-		PostEntity findPost = postRepository.findById(postId).orElseThrow(NotFoundDataException::new);
+	public BoardPostEntity findOne(Long boardId, Long postId, Long authId) {
+		BoardPostEntity findPost = postRepository.findById(postId).orElseThrow(NotFoundDataException::new);
 		if (!findPost.getUser().getId().equals(authId)) {
 			throw new IllegalArgumentException();
 		}
@@ -37,8 +41,8 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	@Transactional
-	public PostEntity updateOne(Long boardId, Long postId, PostEntity post, Long authId) {
-		PostEntity findPost = findOne(boardId, postId, authId);
+	public BoardPostEntity updateOne(Long boardId, Long postId, BoardPostEntity post, Long authId) {
+		BoardPostEntity findPost = findOne(boardId, postId, authId);
 
 		if (!findPost.getUser().getId().equals(authId)) {
 			throw new AuthenticationException();
@@ -50,7 +54,7 @@ public class CommunityServiceImpl implements CommunityService {
 			findPost.updateTitle(post.getTitle());
 		}
 		findPost.updateAt();
-		PostEntity updatePost = postRepository.save(Objects.requireNonNull(findPost));
+		BoardPostEntity updatePost = postRepository.save(Objects.requireNonNull(findPost));
 		if (!updatePost.equals(findPost)) {
 			throw new IllegalArgumentException();
 		}
@@ -64,7 +68,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	@Transactional
 	public void deleteOne(Long boardId, Long postId, Long authId) {
-		PostEntity post = findOne(boardId, postId, authId);
+		BoardPostEntity post = findOne(boardId, postId, authId);
 		if (!post.getUser().getId().equals(authId)) {
 			throw new AuthenticationException();
 		}

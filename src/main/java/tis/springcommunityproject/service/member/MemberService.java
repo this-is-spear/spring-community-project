@@ -1,4 +1,4 @@
-package tis.springcommunityproject.service;
+package tis.springcommunityproject.service.member;
 
 import tis.springcommunityproject.domain.UserEntity;
 

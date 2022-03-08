@@ -1,14 +1,17 @@
 package tis.springcommunityproject.domain;
 
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
-import static java.time.LocalDateTime.*;
+import static java.time.LocalDateTime.now;
 
 @Entity
-@Table(name = "Posts")
-public class PostEntity {
+@Table(name = "posts")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "post_type")
+@DiscriminatorValue("POST")
+public abstract class PostEntity {
 	@Id
 	@GeneratedValue
 	@Column(name = "post_id")
@@ -22,35 +25,25 @@ public class PostEntity {
 	@JoinColumn(name = "user_id")
 	private UserEntity user;
 
-	//TODO 등록일자와 수정일자는 공통으로 처리가 가능하다.
-	@Column(updatable = false, nullable = false)
-	private LocalDateTime createAt;
-
-	@Column(insertable = false)
-	private LocalDateTime updateAt;
+	@Embedded
+	private InsertionDate date;
 
 	protected PostEntity() {
 	}
 
-	private PostEntity(Long id, String title, String content, UserEntity user, LocalDateTime updateAt) {
+	protected PostEntity(Long id, String title, String content, UserEntity user) {
+
+		// 유효성 검사
+
 		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.user = user;
-		this.createAt = now();
-		this.updateAt = updateAt;
+		date = InsertionDate.of(now());
 	}
 
-	public PostEntity(String title, String content) {
-		this(null, title, content, null, null);
-	}
-
-	public static PostEntity of(Long id, String title, String content, UserEntity user, LocalDateTime updateAt) {
-		return new PostEntity(id, title, content, user, updateAt);
-	}
-
-	public static PostEntity of(String title, String content) {
-		return new PostEntity(title, content);
+	protected PostEntity(String title, String content) {
+		this(null, title, content, null);
 	}
 
 	public void updateContent(String content) {
@@ -62,7 +55,7 @@ public class PostEntity {
 	}
 
 	public void updateAt() {
-		this.updateAt = now();
+		this.date.changeUpdateAt();
 	}
 
 	public Long getId() {
@@ -81,12 +74,12 @@ public class PostEntity {
 		return user;
 	}
 
-	public LocalDateTime getCreateAt() {
-		return createAt;
+	public InsertionDate getDate() {
+		return date;
 	}
 
-	public LocalDateTime getUpdateAt() {
-		return updateAt;
+	public void updateUser(UserEntity user) {
+		this.user = user;
 	}
 
 	@Override
@@ -94,15 +87,11 @@ public class PostEntity {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		PostEntity post = (PostEntity) o;
-		return Objects.equals(getId(), post.getId()) && Objects.equals(getTitle(), post.getTitle()) && Objects.equals(getContent(), post.getContent()) && Objects.equals(getUser(), post.getUser()) && Objects.equals(getCreateAt(), post.getCreateAt()) && Objects.equals(getUpdateAt(), post.getUpdateAt());
+		return Objects.equals(getId(), post.getId()) && Objects.equals(getTitle(), post.getTitle()) && Objects.equals(getContent(), post.getContent()) && Objects.equals(getUser(), post.getUser()) && Objects.equals(getDate(), post.getDate());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getTitle(), getContent(), getUser(), getCreateAt(), getUpdateAt());
-	}
-
-	public void updateUser(UserEntity user) {
-		this.user = user;
+		return Objects.hash(getId(), getTitle(), getContent(), getUser(), getDate());
 	}
 }

@@ -1,9 +1,10 @@
-package tis.springcommunityproject.service;
+package tis.springcommunityproject.service.member;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.repository.JpaUserRepository;
+import tis.springcommunityproject.service.NotFoundDataException;
 
 @Service
 public class MemberServiceImpl implements MemberService{

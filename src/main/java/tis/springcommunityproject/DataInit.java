@@ -2,14 +2,13 @@ package tis.springcommunityproject;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import tis.springcommunityproject.domain.BoardEntity;
+import tis.springcommunityproject.domain.community.BoardEntity;
+import tis.springcommunityproject.domain.community.BoardPostEntity;
 import tis.springcommunityproject.domain.PostEntity;
 import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.repository.JpaBoardRepository;
-import tis.springcommunityproject.repository.JpaPostRepository;
-import tis.springcommunityproject.repository.JpaUserRepository;
-import tis.springcommunityproject.service.CommunityService;
-import tis.springcommunityproject.service.MemberService;
+import tis.springcommunityproject.service.community.CommunityService;
+import tis.springcommunityproject.service.member.MemberService;
 
 import javax.annotation.PostConstruct;
 
@@ -39,8 +38,8 @@ public class DataInit {
 		UserEntity userEntity = memberService.join(user);
 		log.info("creaete userEntity {}{}", userEntity, userEntity.getName());
 
-		PostEntity post = PostEntity.of("test title", "test content");
-		PostEntity postEntity = communityService.create(board.getId(), post, AUTH_ID);
+		BoardPostEntity post = BoardPostEntity.of("test title", "test content");
+		BoardPostEntity postEntity = communityService.create(board.getId(), post, AUTH_ID);
 		log.info("creaete postEntity {}{}", postEntity.getId(), postEntity.getTitle());
 
 	}

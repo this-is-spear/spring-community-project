@@ -1,4 +1,4 @@
-package tis.springcommunityproject.domain;
+package tis.springcommunityproject.domain.community;
 
 
 import javax.persistence.*;
@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
-@Table(name = "Boards")
+@Table(name = "boards")
 public class BoardEntity {
 	@Id
 	@GeneratedValue
@@ -15,7 +15,7 @@ public class BoardEntity {
 
 	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
 	@JoinColumn(name = "board_id")
-	private List<PostEntity> postList;
+	private List<BoardPostEntity> postList;
 
 	private String title;
 
@@ -26,13 +26,16 @@ public class BoardEntity {
 		this(null, null, title);
 	}
 
-	private BoardEntity(Long id, List<PostEntity> postList, String title) {
+	private BoardEntity(Long id, List<BoardPostEntity> postList, String title) {
+
+		//유효성 검사
+
 		this.id = id;
 		this.postList = postList;
 		this.title = title;
 	}
 
-	public static BoardEntity of(Long id, List<PostEntity> postList, String title) {
+	public static BoardEntity of(Long id, List<BoardPostEntity> postList, String title) {
 		return new BoardEntity(id, postList, title);
 	}
 
@@ -40,7 +43,7 @@ public class BoardEntity {
 		return id;
 	}
 
-	public List<PostEntity> getPostList() {
+	public List<BoardPostEntity> getPostList() {
 		return Collections.unmodifiableList(postList);
 	}
 

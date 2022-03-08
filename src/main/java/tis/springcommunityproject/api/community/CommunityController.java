@@ -1,8 +1,9 @@
-package tis.springcommunityproject.api;
+package tis.springcommunityproject.api.community;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import tis.springcommunityproject.service.CommunityService;
+import tis.springcommunityproject.api.ApiResult;
+import tis.springcommunityproject.service.community.CommunityService;
 
 import static tis.springcommunityproject.DataInit.AUTH_ID;
 import static tis.springcommunityproject.api.ApiResult.*;
@@ -19,37 +20,37 @@ public class CommunityController {
 	}
 
 	@PostMapping("/post")
-	public ApiResult<PostDto> createPost(
+	public ApiResult<BoardPostDto> createPost(
 		@PathVariable Long boardId,
-		@ModelAttribute PostDto post
+		@RequestBody BoardPostDto post
 	) {
 		return OK(
-			new PostDto(
-				communityService.create(boardId, post.newPostEntity(), AUTH_ID)
+			new BoardPostDto(
+				communityService.create(boardId, post.newBoardPostEntity(), AUTH_ID)
 			)
 		);
 	}
 
 	@GetMapping("/post/{postId}")
-	public ApiResult<PostDto> findOne(
+	public ApiResult<BoardPostDto> findOne(
 		@PathVariable Long boardId,
 		@PathVariable Long postId
 	) {
 		return OK(
-			new PostDto(
+			new BoardPostDto(
 				communityService.findOne(boardId, postId, AUTH_ID)
 			)
 		);
 	}
 
 	@PatchMapping("/post/{postId}")
-	public ApiResult<PostDto> updateOne(
+	public ApiResult<BoardPostDto> updateOne(
 		@PathVariable Long boardId,
 		@PathVariable Long postId,
-		@ModelAttribute PostDto post
+		@RequestBody BoardPostDto post
 	) {
-		return OK(new PostDto(
-			communityService.updateOne(boardId, postId, post.newPostEntity(), AUTH_ID)
+		return OK(new BoardPostDto(
+			communityService.updateOne(boardId, postId, post.newBoardPostEntity(), AUTH_ID)
 		));
 	}
 
