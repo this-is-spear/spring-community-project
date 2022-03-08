@@ -22,14 +22,18 @@ public class ShopReviewEntity {
 	protected ShopReviewEntity() {
 	}
 
-	private ShopReviewEntity(Long id, String content, UserEntity user) {
+	public ShopReviewEntity(String content) {
+		this(null, content, null);
+	}
+
+	public ShopReviewEntity(Long id, String content, UserEntity user) {
 		this.id = id;
 		this.content = content;
 		this.user = user;
 	}
 
-	public static ShopReviewEntity of(String content, UserEntity user) {
-		return new ShopReviewEntity(null, content, user);
+	public static ShopReviewEntity of(String content) {
+		return new ShopReviewEntity(content);
 	}
 
 	public Long getId() {
@@ -42,5 +46,13 @@ public class ShopReviewEntity {
 
 	public UserEntity getUser() {
 		return user;
+	}
+
+	public void updateUser(UserEntity user) {
+		this.user = user;
+	}
+
+	public ShopReviewEntity updateContent(String content) {
+		return new ShopReviewEntity(this.id, content, this.user);
 	}
 }

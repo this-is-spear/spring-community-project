@@ -10,7 +10,7 @@ import static tis.springcommunityproject.api.ApiResult.OK;
 
 @Controller
 @ResponseBody
-@RequestMapping("/shop/{userId}}")
+@RequestMapping("/shop/{userId}")
 public class ShopController {
 	private final ShopService shopService;
 
@@ -25,7 +25,7 @@ public class ShopController {
 	) {
 		return OK(
 			new ShopPostDto(
-				shopService.create(userId, post.newShopPostEntity(), AUTH_ID)
+				shopService.createShopPost(userId, post.newShopPostEntity(), AUTH_ID)
 			)
 		);
 	}
@@ -37,7 +37,7 @@ public class ShopController {
 	) {
 		return OK(
 			new ShopPostDto(
-				shopService.findOne(userId, postId, AUTH_ID)
+				shopService.findShopPost(userId, postId, AUTH_ID)
 			)
 		);
 	}
@@ -50,7 +50,7 @@ public class ShopController {
 	) {
 		return OK(
 			new ShopPostDto(
-				shopService.updateOne(userId, postId, post.newShopPostEntity(), AUTH_ID)
+				shopService.updateShopPost(userId, postId, post.newShopPostEntity(), AUTH_ID)
 			)
 		);
 	}
@@ -60,8 +60,20 @@ public class ShopController {
 		@PathVariable Long userId,
 		@PathVariable Long postId
 	) {
-		shopService.deleteOne(userId, postId, AUTH_ID);
+		shopService.deleteShopPost(userId, postId, AUTH_ID);
 		return OK("DELETE OK");
+	}
+
+	@PostMapping("/post/{postId}/review")
+	public ApiResult<ShopReviewDto> addReview(
+		@PathVariable Long postId,
+		@RequestBody ShopReviewDto shopReview
+	) {
+		return OK(
+			new ShopReviewDto(
+				shopService.createShopReview(postId, shopReview.newShopReviewEntity(), AUTH_ID)
+			)
+		);
 	}
 
 }

@@ -3,27 +3,34 @@ package tis.springcommunityproject.service.shop;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tis.springcommunityproject.domain.shop.ShopPostEntity;
+import tis.springcommunityproject.domain.shop.ShopReviewEntity;
 import tis.springcommunityproject.repository.JpaShopPostRepository;
-import tis.springcommunityproject.repository.JpaUserRepository;
+import tis.springcommunityproject.repository.JpaShopReviewRepository;
 import tis.springcommunityproject.service.AuthenticationException;
 import tis.springcommunityproject.service.NotFoundDataException;
+import tis.springcommunityproject.service.member.MemberService;
 
 @Service
 public class ShopServiceImpl implements ShopService{
 
 	private final JpaShopPostRepository shopPostRepository;
-	private final JpaUserRepository userRepository;
 
-	public ShopServiceImpl(JpaShopPostRepository shopPostRepository, JpaUserRepository userRepository) {
+	private final JpaShopReviewRepository shopReviewRepository;
+	private final MemberService memberService;
+
+	public ShopServiceImpl(JpaShopPostRepository shopPostRepository, JpaShopReviewRepository shopReviewRepository, MemberService memberService) {
 		this.shopPostRepository = shopPostRepository;
-		this.userRepository = userRepository;
+		this.shopReviewRepository = shopReviewRepository;
+		this.memberService = memberService;
 	}
 
 	@Override
 	@Transactional
-	public ShopPostEntity create(Long managerId, ShopPostEntity post, Long authId) {
+	public ShopPostEntity createShopPost(Long managerId, ShopPostEntity post, Long authId) {
 		checkValidate(managerId != null, "Manager id is provided");
 		checkValidate(authId != null, "Auth id is provided");
+
+		post.updateUser(memberService.findOne(authId));
 
 		if (!managerId.equals(authId)) {
 			throw new AuthenticationException();
@@ -37,7 +44,7 @@ public class ShopServiceImpl implements ShopService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public ShopPostEntity findOne(Long managerId, Long postId, Long authId) {
+	public ShopPostEntity findShopPost(Long managerId, Long postId, Long authId) {
 		checkValidate(managerId != null, "Manager id is provided");
 		checkValidate(authId != null, "Auth id is provided");
 
@@ -50,10 +57,10 @@ public class ShopServiceImpl implements ShopService{
 
 	@Override
 	@Transactional
-	public ShopPostEntity updateOne(Long managerId, Long postId, ShopPostEntity post, Long authId) {
-		checkValidate(managerId != null, "Manager id is provided");
-		checkValidate(postId != null, "Post id is provided");
-		checkValidate(authId != null, "Auth id is provided");
+	public ShopPostEntity updateShopPost(Long managerId, Long postId, ShopPostEntity post, Long authId) {
+		checkValidate(managerId != null, "Manager id must be provided");
+		checkValidate(postId != null, "Post id must be provided");
+		checkValidate(authId != null, "Auth id must be provided");
 
 		if (!managerId.equals(authId)) {
 			throw new AuthenticationException();
@@ -61,7 +68,7 @@ public class ShopServiceImpl implements ShopService{
 
 		ShopPostEntity findPost = shopPostRepository.findById(postId).orElseThrow(NotFoundDataException::new);
 
-		checkValidate(findPost.getUser().getId().equals(authId), "not same authId and postId");
+		checkValidate(findPost.getUser().getId().equals(authId), "Didn't same authId and postId");
 
 		if (post.getTitle() != null) {
 			findPost.updateTitle(post.getTitle());
@@ -78,15 +85,61 @@ public class ShopServiceImpl implements ShopService{
 
 	@Override
 	@Transactional
-	public void deleteOne(Long managerId, Long postId, Long authId) {
-		checkValidate(managerId != null, "Manager id is provided");
-		checkValidate(authId != null, "Auth id is provided");
+	public void deleteShopPost(Long managerId, Long postId, Long authId) {
+		checkValidate(managerId != null, "Manager id must be provided");
+		checkValidate(authId != null, "Auth id must be provided");
 
 		if (!managerId.equals(authId)) {
 			throw new AuthenticationException();
 		}
 
 		shopPostRepository.deleteById(postId);
+	}
+
+	@Override
+	@Transactional
+	public ShopReviewEntity createShopReview(Long postId, ShopReviewEntity shopReview, Long authId) {
+		checkValidate(authId != null, "Auth id must be provided");
+		checkValidate(shopReview != null, "shop review must be provided");
+
+		shopReview.updateUser(memberService.findOne(authId));
+
+		ShopPostEntity findShopPost = shopPostRepository.findById(postId).orElseThrow(NotFoundDataException::new);
+		findShopPost.getShowReview().add(shopReview);
+
+		return shopReview;
+	}
+
+	@Override
+	@Transactional
+	public ShopReviewEntity updateShopReview(Long postId, Long shopReviewId, ShopReviewEntity shopReview, Long authId) {
+		checkValidate(shopReviewId != null, "Shop review id id must be provided");
+		checkValidate(authId != null, "Auth id must be provided");
+		checkValidate(shopReview != null, "shop review must be provided");
+
+		ShopReviewEntity findShopReview = shopReviewRepository.findById(shopReviewId).orElseThrow(NotFoundDataException::new);
+
+		if (!shopReview.getUser().getId().equals(authId)) {
+			throw new AuthenticationException();
+		}
+
+		if (shopReview.getContent() != null && !shopReview.getContent().equals(findShopReview.getContent())) {
+			return findShopReview.updateContent(shopReview.getContent());
+		}
+
+		ShopPostEntity findShopPost = shopPostRepository.findById(postId).orElseThrow(NotFoundDataException::new);
+		findShopPost.getShowReview().add(shopReview);
+
+		return findShopReview;
+	}
+
+	@Override
+	@Transactional
+	public void deleteShopReview(Long managerId, Long shopReviewId, Long authId) {
+		if (managerId.equals(authId)) {
+			throw new AuthenticationException();
+		}
+		shopReviewRepository.deleteById(shopReviewId);
 	}
 
 	private void checkValidate(boolean b, String message) {

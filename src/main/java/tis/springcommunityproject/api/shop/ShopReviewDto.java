@@ -24,4 +24,8 @@ public class ShopReviewDto {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	public ShopReviewEntity newShopReviewEntity() {
+		return new ShopReviewEntity(content);
+	}
 }

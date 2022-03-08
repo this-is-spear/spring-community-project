@@ -4,6 +4,8 @@ import tis.springcommunityproject.api.member.UserDto;
 import tis.springcommunityproject.domain.InsertionDate;
 import tis.springcommunityproject.domain.shop.ShopPostEntity;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +19,7 @@ public class ShopPostDto {
 
 	private InsertionDate date;
 
-	private List<ShopReviewDto> shopReview;
+	private List<ShopReviewDto> shopReview = new ArrayList<>();
 
 	protected ShopPostDto() {
 	}
@@ -36,5 +38,36 @@ public class ShopPostDto {
 
 	public ShopPostEntity newShopPostEntity() {
 		return new ShopPostEntity(title, content);
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public UserDto getUser() {
+		return user;
+	}
+
+	public void setUser(UserDto user) {
+		this.user = user;
+	}
+	public InsertionDate getDate() {
+		return date;
+	}
+
+	public List<ShopReviewDto> getShopReview() {
+		return Collections.unmodifiableList(shopReview);
 	}
 }
