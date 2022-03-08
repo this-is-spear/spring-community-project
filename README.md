@@ -7,7 +7,6 @@
 - DTO를 기반으로 Entity를 만들어 관리해 봅시다.
     - 게시판 서비스를 구성하기 위해 전송하기 위한 DTO, 값을 받기 위한 DTO를 생성했습니다.
 - `PostEntity`와`BoardEntity`를 만들어 봅시다.
-  - 
 - `PosetEntity`와`BoardEntity`의 관계를 표현해 봅시다.
     - 하나의 게시판에는 여러 개의 글이 작성될 수 있기 때문에 `BoardEntity` 와 `PostEntity` 는 일대다 관계입니다.
 - `@ManyToOne`,`@OneToMany`,`@JoinColumn`을 적절히 사용합시다.
