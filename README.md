@@ -49,7 +49,23 @@
     	return postRepository.save(post);
     }
    ```
-   
+  
+### Create post
+<img width="1206" alt="스크린샷 2022-03-09 오후 12 23 28" src="https://user-images.githubusercontent.com/92219795/157366679-7f97f150-31ed-43dd-92c2-d6ab4d3cc0f6.png">
+
+### Find post 
+<img width="1206" alt="스크린샷 2022-03-09 오후 12 23 57" src="https://user-images.githubusercontent.com/92219795/157366716-093321d8-eee5-47ca-b9b3-000a0c4ed7ec.png">
+
+### Update post
+<img width="1206" alt="스크린샷 2022-03-09 오후 12 24 11" src="https://user-images.githubusercontent.com/92219795/157366737-feeedd99-acb9-4f76-89d4-43717d1f9037.png">
+
+### Delete post
+<img width="1206" alt="스크린샷 2022-03-09 오후 12 24 21" src="https://user-images.githubusercontent.com/92219795/157366754-2cfd00e2-c64d-46ad-adf2-d236c8c484de.png">
+
+### Join user
+<img width="1206" alt="스크린샷 2022-03-09 오후 12 24 53" src="https://user-images.githubusercontent.com/92219795/157366808-4f91ee0d-8a7e-4255-b816-7499d07e7afe.png">
+
+
 # 프로젝트 라이언 3주차 Challenge 미션
 
 ## 요구사항
@@ -71,3 +87,17 @@
 - 생성된 테이블의 실제 이름에는 `Entity` 라는 문구가 들어가지 않도록 `@Table` 어노테이션을 활용합시다.
 - 변동될 가능성이 있는 데이터와 변동될 가능성이 없는 데이터를 잘 구분하여, `Entity` 작성 여부를 잘 판단합시다.
 - `Entity` 를 먼저 구성하되, 시간이 남으면 CRUD까지 구성해 봅시다.
+
+### Find shop post
+<img width="1206" alt="스크린샷 2022-03-09 오후 12 25 12" src="https://user-images.githubusercontent.com/92219795/157366837-6b879736-2ac6-4f60-bdd3-4b9c49398641.png">
+
+### Create shop post
+<img width="1206" alt="스크린샷 2022-03-09 오후 12 25 22" src="https://user-images.githubusercontent.com/92219795/157366850-21cea7c8-e8b1-4666-bdb2-74eb88f5e72b.png">
+
+### Update shop post
+<img width="1206" alt="스크린샷 2022-03-09 오후 12 27 11" src="https://user-images.githubusercontent.com/92219795/157367011-bf3b81b3-ab63-4840-9744-3e2a6d30d6d3.png">
+
+### Delete shop post
+<img width="1206" alt="스크린샷 2022-03-09 오후 12 33 50" src="https://user-images.githubusercontent.com/92219795/157367696-90f742e1-939f-4762-bbc5-30dab0810d73.png">
+
+
