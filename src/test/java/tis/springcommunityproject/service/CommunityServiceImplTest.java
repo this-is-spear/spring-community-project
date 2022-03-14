@@ -1,36 +1,34 @@
 package tis.springcommunityproject.service;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tis.springcommunityproject.domain.PostEntity;
 import tis.springcommunityproject.domain.UserEntity;
-import tis.springcommunityproject.repository.JpaPostRepository;
+import tis.springcommunityproject.domain.community.BoardPostEntity;
+import tis.springcommunityproject.repository.JpaBoardPostRepository;
+import tis.springcommunityproject.service.community.CommunityServiceImpl;
+import tis.springcommunityproject.service.member.MemberService;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static tis.springcommunityproject.service.fixture.BoardPostFixture.가져오는_게시글;
+import static tis.springcommunityproject.service.fixture.BoardPostFixture.게시글;
+import static tis.springcommunityproject.service.fixture.UserFixture.사용자;
 
 @ExtendWith(MockitoExtension.class)
 class CommunityServiceImplTest {
 	public static final long BOARD_ID = 1L;
 	public static final long POST_ID = 1L;
 	public static final long AUTH_ID = 1L;
-	public static final long USER_ID = 1L;
-	public static final String TEST_TITLE = "test title";
-	public static final String TEST_CONTENT = "test content";
-	public static final String USER_NAME = "user";
 	public static final String UPDATE_TITLE = "update title";
 	public static final String UPDATE_CONTENT = "update content";
 	@Mock
-	private JpaPostRepository postRepository;
+	private JpaBoardPostRepository postRepository;
 
 	@Mock
 	private MemberService memberService;
@@ -39,12 +37,12 @@ class CommunityServiceImplTest {
 	private CommunityServiceImpl communityService;
 
 	UserEntity user;
-	PostEntity post;
+	BoardPostEntity post;
 
 	@BeforeEach
 	void setUp() {
-		user = getUser();
-		post = getPost(user);
+		user = 사용자();
+		post = 가져오는_게시글();
 	}
 
 	//포스트 생성
@@ -52,12 +50,15 @@ class CommunityServiceImplTest {
 	@Order(1)
 	@DisplayName("포스트 생성 테스트")
 	void createPostTest() {
+		BoardPostEntity request = 게시글();
+
 		when(memberService.findOne(any())).thenReturn(user);
-		when(postRepository.save(ArgumentMatchers.any())).thenReturn(post);
+		when(postRepository.save(any())).thenReturn(request);
 
-		PostEntity createPost = communityService.create(BOARD_ID, post, AUTH_ID);
+		BoardPostEntity createPost = communityService.create(BOARD_ID, request, AUTH_ID);
 
-		assertThat(createPost).isEqualTo(post);
+		assertThat(createPost.getTitle()).isEqualTo(post.getTitle());
+		assertThat(createPost.getContent()).isEqualTo(post.getContent());
 	}
 
 	//포스트 조회
@@ -82,13 +83,12 @@ class CommunityServiceImplTest {
 		communityService.deleteOne(BOARD_ID, POST_ID, AUTH_ID);
 	}
 
-
 	//포스트 업데이트
 	@Test
 	@Order(4)
 	@DisplayName("포스트 업데이트 테스트")
 	void updatePostTest() {
-		PostEntity postRequest = PostEntity.of(null, UPDATE_TITLE, UPDATE_CONTENT, user, null);
+		BoardPostEntity postRequest = BoardPostEntity.of(null, UPDATE_TITLE, UPDATE_CONTENT, user);
 		when(postRepository.findById(any())).thenReturn(Optional.ofNullable(post));
 
 		updatePost(postRequest);
@@ -105,11 +105,4 @@ class CommunityServiceImplTest {
 		post.updateContent(postRequest.getContent());
 	}
 
-	private PostEntity getPost(UserEntity user) {
-		return PostEntity.of(POST_ID, TEST_TITLE, TEST_CONTENT, user, null);
-	}
-
-	private UserEntity getUser() {
-		return UserEntity.of(USER_ID, USER_NAME, null);
-	}
 }

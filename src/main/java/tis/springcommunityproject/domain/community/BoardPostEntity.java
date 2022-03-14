@@ -30,7 +30,11 @@ public class BoardPostEntity extends PostEntity {
 		return new BoardPostEntity(title, content);
 	}
 
-	@Override
+	public static BoardPostEntity of(long id, String title, String content, UserEntity user) {
+		return new BoardPostEntity(id, title, content, user);
+	}
+
+  @Override
 	public void updateContent(String content) {
 		super.updateContent(content);
 	}

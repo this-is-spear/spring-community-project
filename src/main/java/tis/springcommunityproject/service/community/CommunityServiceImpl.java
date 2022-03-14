@@ -2,7 +2,6 @@ package tis.springcommunityproject.service.community;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tis.springcommunityproject.domain.PostEntity;
 import tis.springcommunityproject.domain.community.BoardPostEntity;
 import tis.springcommunityproject.repository.JpaBoardPostRepository;
 import tis.springcommunityproject.service.AuthenticationException;

@@ -5,6 +5,7 @@ import tis.springcommunityproject.domain.PostEntity;
 import tis.springcommunityproject.domain.community.BoardPostEntity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 
 public class BoardPostDto {
@@ -26,11 +27,12 @@ public class BoardPostDto {
 	}
 
 	public BoardPostDto(String title, String content) {
-		this.title = title;
-		this.content = content;
+		this(title, content, null, null, null);
 	}
 
 	private BoardPostDto(String title, String content, UserDto user, LocalDateTime createAt, LocalDateTime updateAt) {
+		// 유효성 검사
+
 		this.title = title;
 		this.content = content;
 		this.user = user;
@@ -69,6 +71,5 @@ public class BoardPostDto {
 	public LocalDateTime getUpdateAt() {
 		return updateAt;
 	}
-
 
 }
