@@ -10,6 +10,8 @@ import tis.springcommunityproject.service.NotFoundDataException;
 
 import java.util.Objects;
 
+import static com.google.common.base.Preconditions.*;
+
 @Service
 public class CommunityServiceImpl implements CommunityService {
 
@@ -24,6 +26,10 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	@Transactional
 	public BoardPostEntity create(Long boardId, BoardPostEntity post, Long authId) {
+		checkArgument(boardId != null, "Board id is Provided");
+		checkArgument(post != null, "Post is Provided");
+		checkArgument(authId != null, "Auth id is Provided");
+
 		post.updateUser(memberService.findOne(authId));
 		return postRepository.save(post);
 	}
@@ -31,46 +37,58 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	@Transactional(readOnly = true)
 	public BoardPostEntity findOne(Long boardId, Long postId, Long authId) {
+		checkArgument(boardId != null, "Board id is Provided");
+		checkArgument(postId != null, "Post id is Provided");
+		checkArgument(authId != null, "Auth id is Provided");
 		BoardPostEntity findPost = postRepository.findById(postId).orElseThrow(NotFoundDataException::new);
-		if (!findPost.getUser().getId().equals(authId)) {
-			throw new IllegalArgumentException();
-		}
+
+		checkArgument(findPost.getUser().getId().equals(authId), "인증되지 않은 사용자입니다.");
+
 		return findPost;
 	}
 
 	@Override
 	@Transactional
-	public BoardPostEntity updateOne(Long boardId, Long postId, BoardPostEntity post, Long authId) {
+	public BoardPostEntity updateOne(Long boardId, Long postId, BoardPostEntity request, Long authId) {
+		checkArgument(boardId != null, "Board id is Provided");
+		checkArgument(postId != null, "Post id is Provided");
+		checkArgument(authId != null, "Auth id is Provided");
+
 		BoardPostEntity findPost = findOne(boardId, postId, authId);
 
 		if (!findPost.getUser().getId().equals(authId)) {
 			throw new AuthenticationException();
 		}
-		if (validateStringCheck(post.getContent(), findPost.getContent())) {
-			findPost.updateContent(post.getContent());
+		if (validateStringCheck(request.getContent(), findPost.getContent())) {
+			findPost.updateContent(request.getContent());
 		}
-		if (validateStringCheck(post.getTitle(), findPost.getTitle())) {
-			findPost.updateTitle(post.getTitle());
+		if (validateStringCheck(request.getTitle(), findPost.getTitle())) {
+			findPost.updateTitle(request.getTitle());
 		}
 		findPost.updateAt();
 		BoardPostEntity updatePost = postRepository.save(Objects.requireNonNull(findPost));
-		if (!updatePost.equals(findPost)) {
-			throw new IllegalArgumentException();
-		}
+
+		checkArgument(updatePost.getTitle().equals(request.getTitle()));
+		checkArgument(updatePost.getContent().equals(request.getContent()));
+
 		return findPost;
 	}
 
 	private boolean validateStringCheck(String postString, String findPostString) {
-		return !postString.isEmpty() || !postString.equals(findPostString);
+		return !postString.trim().isEmpty() || !postString.equals(findPostString);
 	}
 
 	@Override
 	@Transactional
 	public void deleteOne(Long boardId, Long postId, Long authId) {
-		BoardPostEntity post = findOne(boardId, postId, authId);
-		if (!post.getUser().getId().equals(authId)) {
-			throw new AuthenticationException();
-		}
+		checkArgument(boardId != null, "Board id is Provided");
+		checkArgument(postId != null, "Post id is Provided");
+		checkArgument(authId != null, "Auth id is Provided");
+
+		BoardPostEntity findPost = findOne(boardId, postId, authId);
+
+		checkArgument(findPost.getUser().getId().equals(authId), "인증되지 않은 사용자입니다.");
+
 		postRepository.deleteById(postId);
 	}
 
