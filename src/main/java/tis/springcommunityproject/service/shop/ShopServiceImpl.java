@@ -14,7 +14,6 @@ import tis.springcommunityproject.service.member.MemberService;
 public class ShopServiceImpl implements ShopService{
 
 	private final JpaShopPostRepository shopPostRepository;
-
 	private final JpaShopReviewRepository shopReviewRepository;
 	private final MemberService memberService;
 
@@ -119,7 +118,7 @@ public class ShopServiceImpl implements ShopService{
 
 		ShopReviewEntity findShopReview = shopReviewRepository.findById(shopReviewId).orElseThrow(NotFoundDataException::new);
 
-		if (!shopReview.getUser().getId().equals(authId)) {
+		if (!findShopReview.getUser().getId().equals(authId)) {
 			throw new AuthenticationException();
 		}
 
@@ -136,7 +135,7 @@ public class ShopServiceImpl implements ShopService{
 	@Override
 	@Transactional
 	public void deleteShopReview(Long managerId, Long shopReviewId, Long authId) {
-		if (managerId.equals(authId)) {
+		if (!managerId.equals(authId)) {
 			throw new AuthenticationException();
 		}
 		shopReviewRepository.deleteById(shopReviewId);
