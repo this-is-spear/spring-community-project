@@ -16,11 +16,7 @@ public class BoardPostFixture {
   }
 
   public static BoardPostEntity 가져오는_게시글() {
-    return BoardPostEntity.of(POST_ID, TITLE, CONTENT, 사용자());
-  }
-
-  public static BoardPostEntity 삭제하려는_게시글() {
-    return BoardPostEntity.of(POST_ID, "title", "content", 사용자());
+    return BoardPostEntity.of(null, TITLE, CONTENT, 사용자());
   }
 
   public static BoardPostEntity 수정하려는_게시글() {

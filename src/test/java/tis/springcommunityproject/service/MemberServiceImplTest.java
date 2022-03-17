@@ -1,37 +1,34 @@
 package tis.springcommunityproject.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import tis.springcommunityproject.domain.UserEntity;
-import tis.springcommunityproject.repository.JpaUserRepository;
+import tis.springcommunityproject.repository.UserRepository;
 import tis.springcommunityproject.service.member.MemberServiceImpl;
+import tis.springcommunityproject.service.memorydatabases.MemoryUserRepository;
 
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 import static tis.springcommunityproject.service.fixture.UserFixture.사용자;
 import static tis.springcommunityproject.service.fixture.UserFixture.회원_가입;
 
-@ExtendWith(MockitoExtension.class)
 class MemberServiceImplTest {
 
-  @Mock
-  private JpaUserRepository userRepository;
+  private final UserRepository userRepository = new MemoryUserRepository();
 
-  @InjectMocks
   private MemberServiceImpl memberService;
+
+  @BeforeEach
+  void setUp() {
+    memberService = new MemberServiceImpl(userRepository);
+  }
 
   @Test
   @DisplayName("회원 가입 테스트")
   void join() {
     UserEntity request = 회원_가입();
-    when(userRepository.save(request)).thenReturn(request);
 
     assertAll(() ->
       assertDoesNotThrow(() -> {
@@ -44,8 +41,7 @@ class MemberServiceImplTest {
   @Test
   @DisplayName("회원 정보 조회 테스트")
   void findOne() {
-    UserEntity user = 사용자();
-    when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+    UserEntity user = userRepository.save(사용자());
 
     assertAll(() ->
       assertDoesNotThrow(() -> {
@@ -59,8 +55,7 @@ class MemberServiceImplTest {
   @Test
   @DisplayName("회원 정보 삭제 테스트")
   void deleteOne() {
-    UserEntity user = 사용자();
-    doNothing().when(userRepository).deleteById(user.getId());
+    UserEntity user = userRepository.save(사용자());
 
     assertAll(() ->
       assertDoesNotThrow(() -> {

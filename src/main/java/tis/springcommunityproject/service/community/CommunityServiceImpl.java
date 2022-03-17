@@ -3,6 +3,7 @@ package tis.springcommunityproject.service.community;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tis.springcommunityproject.domain.community.BoardPostEntity;
+import tis.springcommunityproject.repository.BoardPostRepository;
 import tis.springcommunityproject.repository.JpaBoardPostRepository;
 import tis.springcommunityproject.service.AuthenticationException;
 import tis.springcommunityproject.service.member.MemberService;
@@ -15,10 +16,10 @@ import static com.google.common.base.Preconditions.*;
 @Service
 public class CommunityServiceImpl implements CommunityService {
 
-	private final JpaBoardPostRepository postRepository;
+	private final BoardPostRepository postRepository;
 	private final MemberService memberService;
 
-	public CommunityServiceImpl(JpaBoardPostRepository postRepository, MemberService memberService) {
+	public CommunityServiceImpl(BoardPostRepository postRepository, MemberService memberService) {
 		this.postRepository = postRepository;
 		this.memberService = memberService;
 	}
@@ -86,8 +87,6 @@ public class CommunityServiceImpl implements CommunityService {
 		checkArgument(authId != null, "Auth id is Provided");
 
 		BoardPostEntity findPost = findOne(boardId, postId, authId);
-
-		checkArgument(findPost.getUser().getId().equals(authId), "인증되지 않은 사용자입니다.");
 
 		postRepository.deleteById(postId);
 	}

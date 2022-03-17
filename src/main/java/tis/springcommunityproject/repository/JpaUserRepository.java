@@ -5,7 +5,7 @@ import tis.springcommunityproject.domain.UserEntity;
 
 import java.util.Optional;
 
-public interface JpaUserRepository extends JpaRepository<UserEntity, Long> {
+public interface JpaUserRepository extends JpaRepository<UserEntity, Long>, UserRepository {
 	@Override
 	<S extends UserEntity> S save(S entity);
 

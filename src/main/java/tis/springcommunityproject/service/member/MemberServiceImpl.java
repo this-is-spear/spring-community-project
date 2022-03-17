@@ -4,14 +4,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.repository.JpaUserRepository;
+import tis.springcommunityproject.repository.UserRepository;
 import tis.springcommunityproject.service.NotFoundDataException;
 
 @Service
 public class MemberServiceImpl implements MemberService{
 
-	private final JpaUserRepository userRepository;
+	private final UserRepository userRepository;
 
-	public MemberServiceImpl(JpaUserRepository userRepository) {
+	public MemberServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
