@@ -1,33 +1,38 @@
 package tis.springcommunityproject.domain.area;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.math.BigDecimal;
 
 @Embeddable
 public class Gps {
-	private String latitude;
-	private String longitude;
+
+	@Column(nullable = false, precision = 16, scale = 10)
+	private BigDecimal latitude;
+	@Column(nullable = false, precision = 16, scale = 10)
+	private BigDecimal longitude;
 
 	protected Gps() {
 	}
 
-	public Gps(String latitude, String longitude) {
+	public Gps(BigDecimal latitude, BigDecimal longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
 
-	public String getLatitude() {
+	public BigDecimal getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(String latitude) {
+	public void setLatitude(BigDecimal latitude) {
 		this.latitude = latitude;
 	}
 
-	public String getLongitude() {
+	public BigDecimal getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
 	}
 }

@@ -9,10 +9,10 @@ public class Area {
 	private State state;
 
 	@Embedded
-	private Town town;
+	private City city;
 
 	@Embedded
-	private SiGunGu siGunGu;
+	private Region region;
 
 	@Embedded
 	private Gps gps;
@@ -20,15 +20,15 @@ public class Area {
 	protected Area() {
 	}
 
-	public Area(State state, Town town, SiGunGu siGunGu, Gps gps) {
+	public Area(State state, City city, Region region, Gps gps) {
 		this.state = state;
-		this.town = town;
-		this.siGunGu = siGunGu;
+		this.city = city;
+		this.region = region;
 		this.gps = gps;
 	}
 
-	public Area of(State state, Town town, SiGunGu siGunGu, Gps gps) {
-		return new Area(state, town, siGunGu, gps);
+	public Area of(State state, City city, Region region, Gps gps) {
+		return new Area(state, city, region, gps);
 	}
 
 	public State getState() {
@@ -39,20 +39,20 @@ public class Area {
 		this.state = state;
 	}
 
-	public Town getTown() {
-		return town;
+	public City getCity() {
+		return city;
 	}
 
-	public void setTown(Town town) {
-		this.town = town;
+	public void setCity(City town) {
+		this.city = town;
 	}
 
-	public SiGunGu getSiGunGu() {
-		return siGunGu;
+	public Region getRegion() {
+		return region;
 	}
 
-	public void setSiGunGu(SiGunGu siGunGu) {
-		this.siGunGu = siGunGu;
+	public void setRegion(Region siGunGu) {
+		this.region = siGunGu;
 	}
 
 	public Gps getGps() {

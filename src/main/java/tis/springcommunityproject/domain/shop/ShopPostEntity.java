@@ -36,10 +36,11 @@ public class ShopPostEntity extends PostEntity {
 	}
 
 	public List<ShopReviewEntity> getShowReview() {
-		if (shopReview == null) {
-			return Collections.emptyList();
-		}
-		return shopReview;
+		return Collections.unmodifiableList(shopReview);
+	}
+
+	public void addReview(ShopReviewEntity shopReview) {
+		this.shopReview.add(shopReview);
 	}
 
 }

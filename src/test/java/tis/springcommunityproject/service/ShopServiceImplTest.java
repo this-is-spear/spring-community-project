@@ -112,12 +112,15 @@ class ShopServiceImplTest {
     ShopPostEntity post = SHOP_게시글_조회();
     UserEntity user = 사용자();
     ShopReviewEntity request = SHOP_댓글_생성();
-    assertAll(() ->
-      assertDoesNotThrow(() -> {
-        ShopReviewEntity result = shopService.createShopReview(post.getId(), request, user.getId());
-        assertThat(result.getUser().getId()).isEqualTo(user.getId());
-        assertThat(result.getContent()).isEqualTo(request.getContent());
-      })
+
+    when(memberService.findOne(any())).thenReturn(user);
+    when(shopPostRepository.findById(any())).thenReturn(Optional.of(post));
+
+    ShopReviewEntity result = shopService.createShopReview(post.getId(), request, user.getId());
+
+    assertAll(
+      () -> assertThat(result.getUser().getId()).isEqualTo(user.getId()),
+      () -> assertThat(result.getContent()).isEqualTo(request.getContent())
     );
   }
 
@@ -130,7 +133,6 @@ class ShopServiceImplTest {
     ShopReviewEntity shopReview = SHOP_댓글_조회();
 
     when(shopReviewRepository.findById(any())).thenReturn(Optional.of(shopReview));
-    when(shopPostRepository.findById(any())).thenReturn(Optional.of(post));
 
     assertAll(() ->
       assertDoesNotThrow(() -> {
@@ -145,8 +147,6 @@ class ShopServiceImplTest {
   void deleteShopReview() {
     ShopReviewEntity shopReview = SHOP_댓글_조회();
     UserEntity user = 사용자();
-
-    doNothing().when(shopReviewRepository).deleteById(any());
 
     assertAll(() ->
       assertDoesNotThrow(() -> {

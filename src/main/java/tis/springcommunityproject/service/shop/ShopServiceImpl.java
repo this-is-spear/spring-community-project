@@ -104,7 +104,7 @@ public class ShopServiceImpl implements ShopService{
 		shopReview.updateUser(memberService.findOne(authId));
 
 		ShopPostEntity findShopPost = shopPostRepository.findById(postId).orElseThrow(NotFoundDataException::new);
-		findShopPost.getShowReview().add(shopReview);
+		findShopPost.addReview(shopReview);
 
 		return shopReview;
 	}
@@ -125,9 +125,6 @@ public class ShopServiceImpl implements ShopService{
 		if (shopReview.getContent() != null && !shopReview.getContent().equals(findShopReview.getContent())) {
 			return findShopReview.updateContent(shopReview.getContent());
 		}
-
-		ShopPostEntity findShopPost = shopPostRepository.findById(postId).orElseThrow(NotFoundDataException::new);
-		findShopPost.getShowReview().add(shopReview);
 
 		return findShopReview;
 	}

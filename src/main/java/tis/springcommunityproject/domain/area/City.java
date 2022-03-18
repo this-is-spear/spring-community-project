@@ -3,12 +3,12 @@ package tis.springcommunityproject.domain.area;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class Town {
+public class City {
 	private String town;
 
-	protected Town() {}
+	protected City() {}
 
-	public Town(String town) {
+	public City(String town) {
 		this.town = town;
 	}
 

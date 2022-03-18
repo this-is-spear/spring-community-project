@@ -3,6 +3,8 @@ package tis.springcommunityproject.service.fixture;
 import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.domain.area.*;
 
+import java.math.BigDecimal;
+
 public class UserFixture {
 
   public static final long USER_ID = 1L;
@@ -16,6 +18,6 @@ public class UserFixture {
   }
 
   public static Area 사는_지역() {
-    return new Area(new State("Republic of korea"), new Town("Busan-si"), new SiGunGu("nam-gu"), new Gps("latitude", "longitude"));
+    return new Area(new State("서울시"), new City("서초구"), new Region("서초동"), new Gps(BigDecimal.valueOf(37.4877), BigDecimal.valueOf(127.0174)));
   }
 }

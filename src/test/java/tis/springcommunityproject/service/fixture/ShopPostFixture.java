@@ -3,7 +3,9 @@ package tis.springcommunityproject.service.fixture;
 import tis.springcommunityproject.domain.shop.ShopPostEntity;
 import tis.springcommunityproject.domain.shop.ShopReviewEntity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static tis.springcommunityproject.service.fixture.UserFixture.사용자;
@@ -42,7 +44,12 @@ public class ShopPostFixture {
   }
 
   public static List<ShopReviewEntity> SHOP_댓글_리스트() {
-    return Arrays.asList(SHOP_댓글_조회(), SHOP_댓글_조회(), SHOP_댓글_조회());
+    ArrayList<ShopReviewEntity> list = new ArrayList<>();
+    list.add(SHOP_댓글_조회());
+    list.add(SHOP_댓글_조회());
+    list.add(SHOP_댓글_조회());
+    list.add(SHOP_댓글_조회());
+    return list;
   }
 
 }

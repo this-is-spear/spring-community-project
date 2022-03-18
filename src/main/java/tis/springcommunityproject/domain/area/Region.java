@@ -3,13 +3,13 @@ package tis.springcommunityproject.domain.area;
 import javax.persistence.*;
 
 @Embeddable
-public class SiGunGu {
+public class Region {
 	private String siGunGu;
 
-	protected SiGunGu() {
+	protected Region() {
 	}
 
-	public SiGunGu(String siGunGu) {
+	public Region(String siGunGu) {
 		this.siGunGu = siGunGu;
 	}
 
