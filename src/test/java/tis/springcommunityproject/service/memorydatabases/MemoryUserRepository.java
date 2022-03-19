@@ -3,9 +3,7 @@ package tis.springcommunityproject.service.memorydatabases;
 import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.repository.UserRepository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class MemoryUserRepository implements UserRepository {
 
@@ -16,7 +14,7 @@ public class MemoryUserRepository implements UserRepository {
   @Override
   public UserEntity save(UserEntity user) {
     long id = ++sequence;
-    UserEntity userEntity = UserEntity.of(id, user.getName(), user.getArea());
+    UserEntity userEntity = UserEntity.of(id, user.getName(), user.getPassword(), user.getArea(), user.isShopOwner());
     userEntityHashMap.put(id, userEntity);
     return userEntity;
   }
@@ -34,5 +32,11 @@ public class MemoryUserRepository implements UserRepository {
   @Override
   public void deleteById(Long userId) {
     userEntityHashMap.remove(userId);
+  }
+
+  @Override
+  public Optional<UserEntity> findByName(String username) {
+    return userEntityHashMap.values().stream()
+      .filter(user -> user.getName().equals(username)).findFirst();
   }
 }

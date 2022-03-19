@@ -28,6 +28,8 @@ public class DataInit {
 	private static final String BOARD = "board";
 	private static final String TEST_CONTENT = "test content ";
 	private static final String NAME = "name";
+	private static final String PASSWORD = "password";
+
 
 	private final JpaBoardRepository boardRepository;
 	private final ShopService shopService;
@@ -44,7 +46,7 @@ public class DataInit {
 	@PostConstruct
 	public void inIt() {
 		BoardEntity boardEntity = boardRepository.save(BoardEntity.of(null, null, TEST_TITLE));
-		UserEntity userEntity = memberService.join( UserEntity.of(null, NAME, SEOCHO));
+		UserEntity userEntity = memberService.join( UserEntity.of(null, NAME, PASSWORD, SEOCHO, false));
 		BoardPostEntity createBoardPost = communityService.create(boardEntity.getId(), BoardPostEntity.of(TEST_TITLE + BOARD, TEST_CONTENT + BOARD), AUTH_ID);
 		ShopPostEntity createShopPost = shopService.createShopPost(AUTH_ID, ShopPostEntity.of(TEST_TITLE + SHOP, TEST_CONTENT + SHOP), AUTH_ID);
 		ShopReviewEntity shopReview = ShopReviewEntity.of(TEST_CONTENT);

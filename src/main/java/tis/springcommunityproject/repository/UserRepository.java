@@ -12,4 +12,7 @@ public interface UserRepository {
   boolean existsById(Long userId);
 
   void deleteById(Long userId);
+
+  Optional<UserEntity> findByName(String username);
+
 }

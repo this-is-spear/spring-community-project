@@ -10,11 +10,11 @@ public class UserFixture {
   public static final long USER_ID = 1L;
 
   public static UserEntity 회원_가입() {
-    return UserEntity.of(null, "user", 사는_지역());
+    return UserEntity.of(null, "user", "password", 사는_지역(), false);
   }
 
   public static UserEntity 사용자() {
-    return UserEntity.of(USER_ID, "user", 사는_지역());
+    return UserEntity.of(USER_ID, "user", "password", 사는_지역(), false);
   }
 
   public static Area 사는_지역() {
