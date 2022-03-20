@@ -1,4 +1,4 @@
-package tis.springcommunityproject.service.member;
+package tis.springcommunityproject.infra;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

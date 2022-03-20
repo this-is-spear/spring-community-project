@@ -6,8 +6,8 @@ import tis.springcommunityproject.domain.shop.ShopPostEntity;
 import tis.springcommunityproject.domain.shop.ShopReviewEntity;
 import tis.springcommunityproject.repository.JpaShopPostRepository;
 import tis.springcommunityproject.repository.JpaShopReviewRepository;
-import tis.springcommunityproject.service.AuthenticationException;
-import tis.springcommunityproject.service.NotFoundDataException;
+import tis.springcommunityproject.error.AuthenticationException;
+import tis.springcommunityproject.error.NotFoundDataException;
 import tis.springcommunityproject.service.member.MemberService;
 
 @Service

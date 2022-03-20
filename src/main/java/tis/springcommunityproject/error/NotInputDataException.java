@@ -1,4 +1,4 @@
-package tis.springcommunityproject.service.member;
+package tis.springcommunityproject.error;
 
 public class NotInputDataException extends RuntimeException {
   public NotInputDataException() {

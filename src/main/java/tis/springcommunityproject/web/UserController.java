@@ -17,7 +17,7 @@ import tis.springcommunityproject.service.member.MemberService;
 public class UserController {
   private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-  private MemberService memberService;
+  private final MemberService memberService;
 
   public UserController(MemberService memberService) {
     this.memberService = memberService;

@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.repository.UserRepository;
-import tis.springcommunityproject.service.member.CommunityUserDetailService;
+import tis.springcommunityproject.infra.CommunityUserDetailService;
 import tis.springcommunityproject.service.memorydatabases.MemoryUserRepository;
 
 import static tis.springcommunityproject.service.fixture.UserFixture.사용자;

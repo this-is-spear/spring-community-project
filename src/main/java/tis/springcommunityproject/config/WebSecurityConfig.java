@@ -10,9 +10,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final UserDetailsService userDetailsService;
+  private final CustomSuccessHandler customSuccessHandler;
 
-  public WebSecurityConfig(UserDetailsService userDetailsService) {
+  public WebSecurityConfig(UserDetailsService userDetailsService, CustomSuccessHandler customSuccessHandler) {
     this.userDetailsService = userDetailsService;
+    this.customSuccessHandler = customSuccessHandler;
   }
 
   @Override
@@ -22,8 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.csrf()
-      .and()
+    http.csrf().disable()
       .authorizeRequests()
       .antMatchers("/", "/**", "/user/login", "/user/signup")
       .permitAll()
@@ -33,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .formLogin()
       .loginPage("/user/login")
       .defaultSuccessUrl("/")
+//      .successHandler(customSuccessHandler)
       .permitAll()
       .and()
       .logout()

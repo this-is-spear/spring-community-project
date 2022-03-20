@@ -1,4 +1,4 @@
-package tis.springcommunityproject.service;
+package tis.springcommunityproject.error;
 
 public class AuthenticationException extends RuntimeException {
 	public AuthenticationException() {
