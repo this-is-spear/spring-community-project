@@ -6,6 +6,8 @@ public interface MemberService {
 	// 회원 가입
 	UserEntity join(UserEntity user);
 
+	UserEntity updateJoin(UserEntity user);
+
 	// 회원 정보 수정
 	UserEntity edit(Long id, UserEntity user);
 

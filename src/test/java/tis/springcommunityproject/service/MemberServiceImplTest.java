@@ -3,6 +3,8 @@ package tis.springcommunityproject.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.repository.UserRepository;
 import tis.springcommunityproject.service.member.MemberServiceImpl;
@@ -17,12 +19,13 @@ import static tis.springcommunityproject.service.fixture.UserFixture.회원_가�
 class MemberServiceImplTest {
 
   private final UserRepository userRepository = new MemoryUserRepository();
+  private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
   private MemberServiceImpl memberService;
 
   @BeforeEach
   void setUp() {
-    memberService = new MemberServiceImpl(userRepository);
+    memberService = new MemberServiceImpl(userRepository, passwordEncoder);
   }
 
   @Test

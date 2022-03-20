@@ -7,9 +7,12 @@ import java.math.BigDecimal;
 @Embeddable
 public class Gps {
 
-	@Column(nullable = false, precision = 16, scale = 10)
+	@Column(nullable = true, precision = 16, scale = 10)
+	//	@Column(nullable = false, precision = 16, scale = 10)
 	private BigDecimal latitude;
-	@Column(nullable = false, precision = 16, scale = 10)
+
+	@Column(nullable = true, precision = 16, scale = 10)
+	//	@Column(nullable = false, precision = 16, scale = 10)
 	private BigDecimal longitude;
 
 	protected Gps() {

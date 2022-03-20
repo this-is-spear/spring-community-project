@@ -1,6 +1,7 @@
 package tis.springcommunityproject;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import tis.springcommunityproject.domain.area.*;
 import tis.springcommunityproject.domain.community.BoardEntity;
@@ -35,18 +36,21 @@ public class DataInit {
 	private final ShopService shopService;
 	private final CommunityService communityService;
 	private final MemberService memberService;
+	private final PasswordEncoder passwordEncoder;
 
-	public DataInit(JpaBoardRepository boardRepository, ShopService shopService, CommunityService communityService, MemberService memberService) {
+
+	public DataInit(JpaBoardRepository boardRepository, ShopService shopService, CommunityService communityService, MemberService memberService, PasswordEncoder passwordEncoder) {
 		this.boardRepository = boardRepository;
 		this.shopService = shopService;
 		this.communityService = communityService;
 		this.memberService = memberService;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@PostConstruct
 	public void inIt() {
 		BoardEntity boardEntity = boardRepository.save(BoardEntity.of(null, null, TEST_TITLE));
-		UserEntity userEntity = memberService.join( UserEntity.of(null, NAME, PASSWORD, SEOCHO, false));
+		UserEntity userEntity = memberService.join( UserEntity.of(null, NAME, passwordEncoder.encode(PASSWORD), SEOCHO, false));
 		BoardPostEntity createBoardPost = communityService.create(boardEntity.getId(), BoardPostEntity.of(TEST_TITLE + BOARD, TEST_CONTENT + BOARD), AUTH_ID);
 		ShopPostEntity createShopPost = shopService.createShopPost(AUTH_ID, ShopPostEntity.of(TEST_TITLE + SHOP, TEST_CONTENT + SHOP), AUTH_ID);
 		ShopReviewEntity shopReview = ShopReviewEntity.of(TEST_CONTENT);

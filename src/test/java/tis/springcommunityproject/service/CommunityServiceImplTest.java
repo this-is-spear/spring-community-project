@@ -1,6 +1,8 @@
 package tis.springcommunityproject.service;
 
 import org.junit.jupiter.api.*;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.domain.community.BoardPostEntity;
 import tis.springcommunityproject.repository.BoardPostRepository;
@@ -23,7 +25,9 @@ class CommunityServiceImplTest {
 
   private final BoardPostRepository postRepository = new MemoryBoardPostRepository();
   private final UserRepository userRepository = new MemoryUserRepository();
-  private final MemberService memberService = new MemberServiceImpl(userRepository);
+  private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
+  private final MemberService memberService = new MemberServiceImpl(userRepository, passwordEncoder);
 
   private CommunityServiceImpl communityService;
 
