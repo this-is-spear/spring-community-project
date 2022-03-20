@@ -36,6 +36,32 @@ Spring Security를 활용하여, 로그인, 회원가입 기능을 구현해 봅
   3. 서울시 강남구 삼성동, 37.5140° N, 127.0565° E
 2. `UserDetailsService` 를 구현할때, `UserEntity` 의 모든 정보가 `UserDetails` 에 포함될 필요는 없습니다. 기본적으로 `UserDetails` 는 인터페이스이며, 정의된 함수들이 다 구현되어 있는 어떤 클래스든 상관없이 사용할 수 있습니다.
 
+# 4주차 Basic 미션 구현
+## 로그인
+### 기본 화면
+<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 36 42" src="https://user-images.githubusercontent.com/92219795/159162557-b9acec79-a7d5-45a0-84c9-133324152990.png">
+
+### 로그인 페이지
+<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 38 30" src="https://user-images.githubusercontent.com/92219795/159162675-7971e119-e7b3-4215-9518-13083ee9a779.png">
+
+### 로그인 성공 후 리다이렉트 
+<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 38 39" src="https://user-images.githubusercontent.com/92219795/159162677-3b5ac978-19ba-4264-a899-2631c6698a39.png">
+
+
+## 회원가입
+### 기본 화면
+<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 36 42" src="https://user-images.githubusercontent.com/92219795/159162557-b9acec79-a7d5-45a0-84c9-133324152990.png">
+
+### 회원가입 페이지
+<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 37 47" src="https://user-images.githubusercontent.com/92219795/159162625-c68eb8ec-1a35-4254-980f-9f255a2c35ce.png">
+
+### 회원가입 성공 후 리다이렉트
+<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 38 01" src="https://user-images.githubusercontent.com/92219795/159162643-20a00448-5821-4ea2-be1a-9f001997077e.png">
+
+### 로그인 성공 후 리다이렉트
+<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 38 11" src="https://user-images.githubusercontent.com/92219795/159162655-8f228021-23c9-4480-8d61-941bacedcf76.png">
+
+
 # 프로젝트 라이언 4주차 Challenge 미션
 Spring Security의 기능은 대부분 Java Servlet Filter를 구성함으로서 만들어집니다. 새로운 Filter를 구현하여, SSO의 초석을 닦아봅시다.
 
@@ -218,19 +244,19 @@ http
    ```
   
 ### Create post
-<img width="1206" alt="스크린샷 2022-03-09 오후 12 23 28" src="https://user-images.githubusercontent.com/92219795/157366679-7f97f150-31ed-43dd-92c2-d6ab4d3cc0f6.png">
+<img width="400" height="300" alt="스크린샷 2022-03-09 오후 12 23 28" src="https://user-images.githubusercontent.com/92219795/157366679-7f97f150-31ed-43dd-92c2-d6ab4d3cc0f6.png">
 
 ### Find post 
-<img width="1206" alt="스크린샷 2022-03-09 오후 12 23 57" src="https://user-images.githubusercontent.com/92219795/157366716-093321d8-eee5-47ca-b9b3-000a0c4ed7ec.png">
+<img width="400" height="300" alt="스크린샷 2022-03-09 오후 12 23 57" src="https://user-images.githubusercontent.com/92219795/157366716-093321d8-eee5-47ca-b9b3-000a0c4ed7ec.png">
 
 ### Update post
-<img width="1206" alt="스크린샷 2022-03-09 오후 12 24 11" src="https://user-images.githubusercontent.com/92219795/157366737-feeedd99-acb9-4f76-89d4-43717d1f9037.png">
+<img width="400" height="300" alt="스크린샷 2022-03-09 오후 12 24 11" src="https://user-images.githubusercontent.com/92219795/157366737-feeedd99-acb9-4f76-89d4-43717d1f9037.png">
 
 ### Delete post
-<img width="1206" alt="스크린샷 2022-03-09 오후 12 24 21" src="https://user-images.githubusercontent.com/92219795/157366754-2cfd00e2-c64d-46ad-adf2-d236c8c484de.png">
+<img width="400" height="300" alt="스크린샷 2022-03-09 오후 12 24 21" src="https://user-images.githubusercontent.com/92219795/157366754-2cfd00e2-c64d-46ad-adf2-d236c8c484de.png">
 
 ### Join user
-<img width="1206" alt="스크린샷 2022-03-09 오후 12 24 53" src="https://user-images.githubusercontent.com/92219795/157366808-4f91ee0d-8a7e-4255-b816-7499d07e7afe.png">
+<img width="400" height="300" alt="스크린샷 2022-03-09 오후 12 24 53" src="https://user-images.githubusercontent.com/92219795/157366808-4f91ee0d-8a7e-4255-b816-7499d07e7afe.png">
 
 
 # 프로젝트 라이언 3주차 Challenge 미션
@@ -256,15 +282,15 @@ http
 - `Entity` 를 먼저 구성하되, 시간이 남으면 CRUD까지 구성해 봅시다.
 
 ### Find shop post
-<img width="1206" alt="스크린샷 2022-03-09 오후 12 25 12" src="https://user-images.githubusercontent.com/92219795/157366837-6b879736-2ac6-4f60-bdd3-4b9c49398641.png">
+<img width="400" height="300" alt="스크린샷 2022-03-09 오후 12 25 12" src="https://user-images.githubusercontent.com/92219795/157366837-6b879736-2ac6-4f60-bdd3-4b9c49398641.png">
 
 ### Create shop post
-<img width="1206" alt="스크린샷 2022-03-09 오후 12 25 22" src="https://user-images.githubusercontent.com/92219795/157366850-21cea7c8-e8b1-4666-bdb2-74eb88f5e72b.png">
+<img width="400" height="300" alt="스크린샷 2022-03-09 오후 12 25 22" src="https://user-images.githubusercontent.com/92219795/157366850-21cea7c8-e8b1-4666-bdb2-74eb88f5e72b.png">
 
 ### Update shop post
-<img width="1206" alt="스크린샷 2022-03-09 오후 12 27 11" src="https://user-images.githubusercontent.com/92219795/157367011-bf3b81b3-ab63-4840-9744-3e2a6d30d6d3.png">
+<img width="400" height="300" alt="스크린샷 2022-03-09 오후 12 27 11" src="https://user-images.githubusercontent.com/92219795/157367011-bf3b81b3-ab63-4840-9744-3e2a6d30d6d3.png">
 
 ### Delete shop post
-<img width="1206" alt="스크린샷 2022-03-09 오후 12 33 50" src="https://user-images.githubusercontent.com/92219795/157367696-90f742e1-939f-4762-bbc5-30dab0810d73.png">
+<img width="400" height="300" alt="스크린샷 2022-03-09 오후 12 33 50" src="https://user-images.githubusercontent.com/92219795/157367696-90f742e1-939f-4762-bbc5-30dab0810d73.png">
 
 
