@@ -6,16 +6,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tis.communityproject.domain.UserEntity;
 import tis.communityproject.error.NotFoundDataException;
-import tis.communityproject.repository.UserRepository;
+import tis.communityproject.repository.JpaUserRepository;
 
 @Service
 public class MemberServiceImpl implements MemberService{
 
-	private final UserRepository userRepository;
+	private final JpaUserRepository userRepository;
 
 	private final PasswordEncoder passwordEncoder;
 
-	public MemberServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+	public MemberServiceImpl(JpaUserRepository userRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 	}

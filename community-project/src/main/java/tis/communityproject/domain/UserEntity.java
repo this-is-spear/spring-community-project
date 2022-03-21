@@ -1,6 +1,5 @@
 package tis.communityproject.domain;
 
-
 import tis.communityproject.domain.area.Area;
 
 import javax.persistence.*;

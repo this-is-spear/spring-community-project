@@ -11,8 +11,7 @@
 <body>
 <div sec:authorize="isAnonymous()">
     <h2>hello world</h2>
-    <button th:onclick="|location.href = '/user/login'|">로그인</button>
-    <button th:onclick="|location.href = '/user/signup'|">회원가입</button>
+    <button th:onclick="|location.href = '/user/request-login'|">로그인</button>
 </div>
 <div sec:authorize="isAuthenticated()">
     <h2>반갑습니다.<span sec:authentication="name"></span>님!</h2>

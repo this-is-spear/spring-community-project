@@ -3,6 +3,7 @@ package tis.communityproject.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,39 +14,19 @@ import org.springframework.web.server.ResponseStatusException;
 import tis.communityproject.domain.UserEntity;
 import tis.communityproject.service.member.MemberService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("user")
 public class UserController {
   private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-  private final MemberService memberService;
+  @GetMapping("/request-login")
+  public String loginPage(HttpServletRequest request) {
+    log.info("request = {}", request.getRequestURI());
+    log.info("request = {}", request.getServletPath());
 
-  public UserController(MemberService memberService) {
-    this.memberService = memberService;
-  }
-
-  @GetMapping("login")
-  public String loginPage() {
-    return "login";
-  }
-
-  @GetMapping("signup")
-  public String signUpPage() {
-    return "sign-up";
-  }
-
-  @PostMapping("signup")
-  public String signUp(
-    @RequestParam String username,
-    @RequestParam String password,
-    @RequestParam String passwordConfirm
-  ) {
-    if (!password.equals(passwordConfirm)) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-    }
-    UserEntity entity = memberService.updateJoin(UserEntity.of(username, password));
-    log.info("join success {}", entity);
-    return "redirect:/";
+    return "redirect:localhost:10000/user/login?" + request.getServletPath() ;
   }
 
 }
