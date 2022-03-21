@@ -216,6 +216,7 @@ http
 
 <img  width="400" height="300" alt="스크린샷 2022-03-21 오후 1 24 04" src="https://user-images.githubusercontent.com/92219795/159205246-b179e3f3-5c83-48c8-80e4-3ea4d7c19c95.png">
 
+<img width="1001" alt="스크린샷 2022-03-21 오후 1 31 29" src="https://user-images.githubusercontent.com/92219795/159205717-41c8cd37-1d82-4b20-bb46-4ca1150bf3a9.png">
 
 
 
