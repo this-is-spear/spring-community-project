@@ -7,7 +7,6 @@ import org.slf4j.MDC;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -16,10 +15,9 @@ import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @Component
@@ -28,12 +26,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
   public static final String LOGIN_COOKIE = "likelion_login_cookie";
   public static final String LIKELION = "likelion";
 
-  private final UserDetailsService userDetailsService;
   ObjectMapper objectMapper = new ObjectMapper();
-
-  public CustomAuthenticationFilter(UserDetailsService userDetailsService) {
-    this.userDetailsService = userDetailsService;
-  }
 
   private static final String LOG_ID = "logId";
   private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -45,6 +38,10 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
     log.debug("[{}][{}] REQUEST", MDC.get(LOG_ID), requestURI);
 
     Cookie[] cookies = request.getCookies();
+    for (Cookie cookie : cookies) {
+      log.info("cookie = {} {}", cookie.getName(), cookie.getValue());
+    }
+
     Cookie cookie = Arrays.stream(cookies).filter(c -> c.getName().equals(LOGIN_COOKIE)).findFirst().orElse(null);
 
     if (cookie == null) {

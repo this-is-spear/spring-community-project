@@ -28,7 +28,11 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
     log.info("-----------{Add Cookie}----------");
-    response.addCookie(new Cookie(LOGIN_COOKIE, URLEncoder.encode(LIKELION + "_"+ objectMapper.writeValueAsString(authentication), StandardCharsets.UTF_8)));
+    Cookie cookie = new Cookie(LOGIN_COOKIE, URLEncoder.encode(LIKELION + "_" + objectMapper.writeValueAsString(authentication), StandardCharsets.UTF_8));
+    cookie.setMaxAge(60*60);
+    response.addCookie(cookie);
+    cookie.setDomain("127.0.0.1/**");
+    cookie.setPath("/**");
     super.onAuthenticationSuccess(request, response, authentication);
   }
 }
