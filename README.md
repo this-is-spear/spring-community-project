@@ -39,27 +39,27 @@ Spring Security를 활용하여, 로그인, 회원가입 기능을 구현해 봅
 # 4주차 Basic 미션 구현
 ## 로그인
 ### 기본 화면
-<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 36 42" src="https://user-images.githubusercontent.com/92219795/159162557-b9acec79-a7d5-45a0-84c9-133324152990.png">
+<img width="1040"  alt="스크린샷 2022-03-20 오후 9 36 42" src="https://user-images.githubusercontent.com/92219795/159162557-b9acec79-a7d5-45a0-84c9-133324152990.png">
 
 ### 로그인 페이지
-<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 38 30" src="https://user-images.githubusercontent.com/92219795/159162675-7971e119-e7b3-4215-9518-13083ee9a779.png">
+<img width="1040"  alt="스크린샷 2022-03-20 오후 9 38 30" src="https://user-images.githubusercontent.com/92219795/159162675-7971e119-e7b3-4215-9518-13083ee9a779.png">
 
 ### 로그인 성공 후 리다이렉트 
-<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 38 39" src="https://user-images.githubusercontent.com/92219795/159162677-3b5ac978-19ba-4264-a899-2631c6698a39.png">
+<img width="1040"  alt="스크린샷 2022-03-20 오후 9 38 39" src="https://user-images.githubusercontent.com/92219795/159162677-3b5ac978-19ba-4264-a899-2631c6698a39.png">
 
 
 ## 회원가입
 ### 기본 화면
-<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 36 42" src="https://user-images.githubusercontent.com/92219795/159162557-b9acec79-a7d5-45a0-84c9-133324152990.png">
+<img width="1040" alt="스크린샷 2022-03-20 오후 9 36 42" src="https://user-images.githubusercontent.com/92219795/159162557-b9acec79-a7d5-45a0-84c9-133324152990.png">
 
 ### 회원가입 페이지
-<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 37 47" src="https://user-images.githubusercontent.com/92219795/159162625-c68eb8ec-1a35-4254-980f-9f255a2c35ce.png">
+<img width="1040" alt="스크린샷 2022-03-20 오후 9 37 47" src="https://user-images.githubusercontent.com/92219795/159162625-c68eb8ec-1a35-4254-980f-9f255a2c35ce.png">
 
 ### 회원가입 성공 후 리다이렉트
-<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 38 01" src="https://user-images.githubusercontent.com/92219795/159162643-20a00448-5821-4ea2-be1a-9f001997077e.png">
+<img width="1040" alt="스크린샷 2022-03-20 오후 9 38 01" src="https://user-images.githubusercontent.com/92219795/159162643-20a00448-5821-4ea2-be1a-9f001997077e.png">
 
 ### 로그인 성공 후 리다이렉트
-<img width="400" height="300" alt="스크린샷 2022-03-20 오후 9 38 11" src="https://user-images.githubusercontent.com/92219795/159162655-8f228021-23c9-4480-8d61-941bacedcf76.png">
+<img width="1040"  alt="스크린샷 2022-03-20 오후 9 38 11" src="https://user-images.githubusercontent.com/92219795/159162655-8f228021-23c9-4480-8d61-941bacedcf76.png">
 
 
 # 프로젝트 라이언 4주차 Challenge 미션
@@ -189,6 +189,34 @@ http
 2. 현재 요구 사항까지 진행할 경우, 아직 SSO 로그인이 진행되지는 않습니다. 로그인 성공 이후 받아오게 되는 `likelion_login_cookie` 를 가지고 실제 로그인한 사용자의 정보를 확인하는 과정이 필요합니다.
 3. `AuthenticationSuccessHandler` 는 로그인이 성공한 뒤에만 실행되는, Filter와 유사한 동작을 하는 인터페이스 입니다.
 4. `Query Parameter` 는 URL의 구조에 대하여, URL 뒤에 조회 등의 목적으로 추가적인 데이터를 첨부할 때 사용하는 인자입니다. `@GetMapping` 의 `@RequestParam` 으로 확인할 수 있습니다.
+
+# 4주차 Chalenge 미션 구현
+
+### 로그인 페이지
+
+`loacalhost:9080/`으로 접근할 때, 인증된 사용자가 아니면 `http://127.0.0.1:10000/user/login` 페이지로 리다이렉트
+
+<img width="1040" alt="스크린샷 2022-03-21 오후 1 23 17" src="https://user-images.githubusercontent.com/92219795/159205186-c5ed441e-b72f-438b-88dd-9e74136071ee.png">
+
+### 회원가입
+
+회원가입
+
+<img width="1040" alt="스크린샷 2022-03-21 오후 1 23 31" src="https://user-images.githubusercontent.com/92219795/159205201-80c34ae7-4206-498e-a1c2-11ee00b6664b.png">
+
+### 회원가입 후 로그인
+
+`http://127.0.0.1:10000/user/login`에서 로그인을 성공하면 원래 `http://127.0.0.1:9080` 페이지로 이동 
+
+<img width="1040" alt="스크린샷 2022-03-21 오후 1 23 42" src="https://user-images.githubusercontent.com/92219795/159205215-d6dbf6e6-3a7b-4d09-a820-02fdc91450fb.png">
+
+### 쿠키 확인
+
+쿠키가 정상적으로 등록된 것을 확인할 수 있습니다.
+
+<img width="1040" alt="스크린샷 2022-03-21 오후 1 24 04" src="https://user-images.githubusercontent.com/92219795/159205246-b179e3f3-5c83-48c8-80e4-3ea4d7c19c95.png">
+
+
 
 
 # 프로젝트 라이언 3주차 Basic 미션
